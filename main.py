@@ -4,6 +4,7 @@
 import os
 from fastapi import FastAPI
 from pydantic import BaseModel
+from dotenv import load_dotenv
 
 # --- Import LangChain and Pinecone tools ---
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -14,8 +15,14 @@ from langchain_pinecone import PineconeVectorStore
 
 # --- CONFIGURATION BLOCK ---
 # Set all keys needed for the entire project here
-os.environ["PINECONE_API_KEY"] = "pcsk_3iQo4y_HMCYuMamhX1dzF74Niw95fpdHDcStBtjiu7Jx4V246KZBHJGsnCPwAxyBCaHRRs"
-os.environ["GOOGLE_API_KEY"] = "AIzaSyDA5l-s_9KRGiFVIdoIOHF0fWOq9h_nAwM"
+# Ingest.py / main.py
+
+
+load_dotenv() # Load variables from .env
+
+PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
 
 
 # --- SETUP THE RAG CHAIN ---

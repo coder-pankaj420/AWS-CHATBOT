@@ -4,7 +4,7 @@
 # Ingest.py - Corrected Imports
 
 import os
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFLoader  
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -14,20 +14,16 @@ from pinecone import Pinecone, ServerlessSpec
 
 
 
-# --- CONFIGURATION ---
-# Load our secret API keys from the .env file
-#load_dotenv()
-
-# --- THIS IS A DEBUGGING STEP ---
-#print(f"My Pinecone API Key is: {os.getenv('PINECONE_API_KEY')}") 
-
-#PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
-#PINECONE_API_KEY = "pcsk_3iQo4y_HMCYuMamhX1dzF74Niw95fpdHDcStBtjiu7Jx4V246KZBHJGsnCPwAxyBCaHRRs"
 
 
 # --- THIS IS THE FIX ---
-os.environ["PINECONE_API_KEY"] = "pcsk_3iQo4y_HMCYuMamhX1dzF74Niw95fpdHDcStBtjiu7Jx4V246KZBHJGsnCPwAxyBCaHRRs"
-os.environ["GOOGLE_API_KEY"] = "AIzaSyDA5l-s_9KRGiFVIdoIOHF0fWOq9h_nAwM"
+# Ingest.py / main.py
+
+
+load_dotenv() # Load variables from .env
+
+PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 
 
