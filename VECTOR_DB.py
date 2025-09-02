@@ -1,7 +1,4 @@
-# ingest.py
 
-# Import necessary tools
-# Ingest.py - Corrected Imports
 
 import os
 from dotenv import load_dotenv
@@ -15,11 +12,6 @@ from pinecone import Pinecone, ServerlessSpec
 
 
 
-
-# --- THIS IS THE FIX ---
-# Ingest.py / main.py
-
-
 load_dotenv() # Load variables from .env
 
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
@@ -27,9 +19,9 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 
 
-# Define the name of our PDF file
+
 PDF_FILE_PATH = "AWS Description.pdf" 
-# Define the name for our Pinecone index (like a table in a database)
+
 PINECONE_INDEX_NAME = "my-chatbot-index"
 
 def main():
@@ -38,7 +30,7 @@ def main():
     """
     print("Starting data ingestion...")
 
-    # Load the PDF document
+    # Loading the PDF document
     print(f"Loading PDF: {PDF_FILE_PATH}...")
     loader = PyPDFLoader(PDF_FILE_PATH)
     documents = loader.load()
@@ -47,13 +39,13 @@ def main():
         return
     print(f"Loaded {len(documents)} pages from the PDF.")
 
-    # Split the document into smaller chunks
+    # Spliting the document into smaller chunks
     print("Splitting documents into chunks...")
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
     chunked_documents = text_splitter.split_documents(documents)
     print(f"Split into {len(chunked_documents)} chunks.")
 
-    # Create embeddings
+    # embeddings
     print("Creating text embeddings...")
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
@@ -82,7 +74,7 @@ def main():
     # --- END OF NEW CODE BLOCK ---
 
 
-    # Upload the chunks to the (now existing) Pinecone index
+    # Uploading the chunks to the (now existing) Pinecone index
     print("Uploading data to Pinecone index...")
     PineconeVectorStore.from_documents(
         documents=chunked_documents,
