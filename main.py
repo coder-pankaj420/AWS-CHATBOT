@@ -1,10 +1,10 @@
-# main.py
+# main.py - FINAL SECURE VERSION
 
 # --- FIRST: Load Environment Variables ---
+# This block loads the API keys from your .env file.
+# It MUST come before any library that uses those keys is imported.
 import os
 from dotenv import load_dotenv
-
-# This is the most important line. It MUST run before other imports.
 load_dotenv()
 
 
@@ -20,9 +20,8 @@ from langchain_pinecone import PineconeVectorStore
 
 # --- SETUP THE RAG CHAIN ---
 
-# 1. Set up the AI model (LLM) - Gemini
-# Now, when this line runs, the GOOGLE_API_KEY is already loaded and available.
-llm = ChatGoogleGenerativeAI(model="gemini-pro")
+# 1. Set up the AI model (LLM) - Using the free-tier friendly Gemini Flash model
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash-latest")
 
 # 2. Set up the retriever
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
@@ -64,7 +63,7 @@ def chat(query: QueryRequest):
     and returns the answer.
     """
     print(f"Received question: {query.question}")
-    result = qa_chain({"query": query.question})
+    result = qa_chain.invoke({"query": query.question}) # Using .invoke() is the modern syntax
     
     print(f"Generated answer: {result['result']}")
     return {"answer": result['result']}
